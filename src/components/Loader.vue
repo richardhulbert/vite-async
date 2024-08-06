@@ -1,8 +1,9 @@
 <script setup>
-import {computed, defineAsyncComponent, ref, watch} from "vue";
+import {computed, defineAsyncComponent, ref} from "vue";
 import Loading from "@/components/Loading.vue";
 import Missing from "@/components/Missing.vue";
-import {TwSelect,TwButton} from "vue3-tailwind-components";
+import {TwSelect} from "vue3-tailwind-components";
+import {componentMapping} from "@/componentMapping.js";
 
 const componentList = [
   {label:"One",value:'one.vue'},
@@ -14,8 +15,12 @@ const dynamicComponent = ref('')
 
 
 function loadComponent(component) {
+  const loader = componentMapping[component];
+  if (!loader) {
+    return Missing;
+  }
   return defineAsyncComponent({
-    loader: () => import( /* @vite-ignore */component),
+    loader,
     loadingComponent:Loading,
     delay:2000,
     errorComponent: Missing,
@@ -28,7 +33,7 @@ const is_selected = computed(()=>{
 })
 
 const component_with_path = computed(()=>{
-  return './dynamic/'+dynamicComponent.value
+  return dynamicComponent.value
 })
 
 
