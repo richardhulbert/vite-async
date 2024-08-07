@@ -1,5 +1,14 @@
-export const componentMapping = {
-    'one.vue':()=>import('./components/dynamic/one.vue'),
-    'two.vue':()=>import('./components/dynamic/two.vue'),
-    'three.vue':()=>import('./components/dynamic/three.vue')
+export function componentMapping() {
+    const modules = import.meta.glob('./components/dynamic/*.vue')
+    let dynamicComponents = {}
+    for (const path in modules) {
+        let arr = path.split('/')
+        let name = arr[arr.length - 1]
+        dynamicComponents[name] = modules[path]
+    }
+    return dynamicComponents
 }
+
+
+
+

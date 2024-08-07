@@ -15,7 +15,7 @@ const dynamicComponent = ref('')
 
 
 function loadComponent(component) {
-  const loader = componentMapping[component];
+  const loader = componentMapping()[component];
   if (!loader) {
     return Missing;
   }
