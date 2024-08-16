@@ -1,5 +1,9 @@
-export function componentMapping() {
-    const modules = import.meta.glob('./components/dynamic/*.vue')
+export function componentMapping(dir) {
+  let modules;
+      switch (dir){
+          default: modules = import.meta.glob('./components/dynamic/*.vue');
+      }
+
     let dynamicComponents = {}
     for (const path in modules) {
         let arr = path.split('/')
